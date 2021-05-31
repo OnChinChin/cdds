@@ -1,0 +1,3 @@
+﻿  Main.cpp
+C:\Users\s210537\source\repos\AIE_Random\AIE_LinkedList\Main.cpp(161,9): error C2760: syntax error: unexpected token 'return', expected ';'
+C:\Users\s210537\source\repos\AIE_Random\AIE_LinkedList\Main.cpp(175): message : see reference to class template instantiation 'LinkedList<T>' being compiled
