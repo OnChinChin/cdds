@@ -69,6 +69,11 @@ public:
     {
     }
 
+    bool IsEmpty()
+    {
+        return m_first == nullptr;
+    }
+
     void PushBack(T value)
     {
 
@@ -118,13 +123,18 @@ public:
             }
             m_first = m_first->next;
             delete n;
+            m_count--;
         }
-        m_count--;
+
+        if (m_first == nullptr)
+        {
+            m_last = nullptr;
+        }
     }
     void PopBack()
     {
         Node* n = new Node();
-        if (m_first != nullptr)
+        if (m_last != nullptr)
         {
             n = m_last;
             if (m_last->prev != nullptr)
@@ -132,9 +142,16 @@ public:
                 m_last->prev->next = nullptr;
             }
             m_last = m_last->prev;
+
+            if (m_last == nullptr)
+            {
+                m_first = nullptr;
+            }
             delete n;
+            m_count--;
         }
-        m_count--;
+
+        
     }
 
     Iterator Remove(Iterator iter)
@@ -188,12 +205,17 @@ public:
         return Iterator(newNode);
     }
 
+    void Clear()
+    {
+        while (!IsEmpty())
+        {
+            PopBack();
+        }
+    }
+
     unsigned int Count()
     {
         return m_count;
-        // TODO: return the count
-        // you can implement either approach mentioned above,
-        // all we care about is that the returned value reflects how many items are in the list!
     }
 
     Node* FirstNode() { return m_first; }
