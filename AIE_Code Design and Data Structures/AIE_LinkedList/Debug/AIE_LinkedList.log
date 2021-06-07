@@ -1,3 +1,5 @@
-﻿  Main.cpp
-C:\Users\s210537\source\repos\AIE_Random\AIE_LinkedList\Main.cpp(161,9): error C2760: syntax error: unexpected token 'return', expected ';'
-C:\Users\s210537\source\repos\AIE_Random\AIE_LinkedList\Main.cpp(175): message : see reference to class template instantiation 'LinkedList<T>' being compiled
+﻿  LinkedList.cpp
+  Main.cpp
+  Generating Code...
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+C:\Users\s210537\Desktop\cdds\cdds\AIE_Code Design and Data Structures\Debug\AIE_LinkedList.exe : fatal error LNK1120: 1 unresolved externals
