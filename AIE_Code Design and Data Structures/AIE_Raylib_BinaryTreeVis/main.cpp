@@ -1,166 +1,95 @@
-#include<iostream>
-#include<cstring>
-#include<vector>
-#include <functional>
-#include<list>
+/*******************************************************************************************
+*
+*   raylib [core] example - Basic window
+*
+*   Welcome to raylib!
+*
+*   To test examples, just press F6 and execute raylib_compile_execute script
+*   Note that compiled executable is placed in the same folder as .c file
+*
+*   You can find all basic examples on C:\raylib\raylib\examples folder or
+*   raylib official webpage: www.raylib.com
+*
+*   Enjoy using raylib. :)
+*
+*   This example has been created using raylib 1.0 (www.raylib.com)
+*   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
+*
+*   Copyright (c) 2014 Ramon Santamaria (@raysan5)
+*
+********************************************************************************************/
 
-struct Node
+#include "raylib.h"
+
+#define RAYGUI_IMPLEMENTATION
+#define RAYGUI_SUPPORT_ICONS
+#include "raygui.h"
+
+#include "BinaryTree.h"
+#include "TreeNode.h"
+
+int main(int argc, char* argv[])
 {
-    int value;
-    Node* left = nullptr;
-    Node* right = nullptr;
+    // Initialization
+    //--------------------------------------------------------------------------------------
+    int screenWidth = 800;
+    int screenHeight = 450;
 
-    // Constructor
-    Node() {};
+    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
-    // Overloaded Constructor
-    Node(int value) : value(value) {}
+    SetTargetFPS(60);
+    //--------------------------------------------------------------------------------------
 
-    // Overloaded Constructor
-    Node(int value, Node* left, Node* right) : value(value), left(left), right(right) {}
-};
 
-void ForEachPreOrder(Node* n, std::function<void(Node*)> fn)
-{
-    if (n == nullptr)
-        return;
+    BinaryTree m_binaryTree;
+    TreeNode* m_selectedNode = nullptr;
 
-    // Invoke the fn for each node
-    fn(n);
 
-    ForEachPreOrder(n->left, fn);
-    ForEachPreOrder(n->right, fn);
-}
+    int valueBoxValue = 0;
+    bool valueBoxEditMode = false;
 
-void ForEachDfs(Node* root, std::function<void(Node*)> fn)
-{
-    // Create the stack
-    std::list<Node*> stack;
-
-    // add first node to the stack
-    stack.push_back(root);
-
-    // while stack is not empty
-    while (stack.empty() == false)
+    // Main game loop
+    while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // remove the next node
-        Node* n = stack.back();
-        stack.pop_back();
+        // Update
+        //----------------------------------------------------------------------------------
+        // TODO: Update your variables here
+        //----------------------------------------------------------------------------------
 
-        // process the node
-        fn(n);
+        // Draw
+        //----------------------------------------------------------------------------------
+        BeginDrawing();
 
-        // add children to the stack
-        if (n->right) stack.push_back(n->right);
-        if (n->left) stack.push_back(n->left);
+        ClearBackground(RAYWHITE);
+
+        GuiSetStyle(TEXTBOX, TEXT_ALIGNMENT, GUI_TEXT_ALIGN_CENTER);
+        
+        if(GuiValueBox(Rectangle{ 25, 25, 125, 30 }, NULL, &valueBoxValue, 0, 100, valueBoxEditMode)) valueBoxEditMode = !valueBoxEditMode;
+
+        if (GuiButton(Rectangle { 160, 25, 125, 30 }, GuiIconText(RICON_OK_TICK, "Insert")))
+        {
+            // Implement the code to insert valueBoxValue into your binary tree here! 
+            //m_binaryTree.Insert(valueBoxValue);
+            //m_selectedNode = m_binaryTree.Find(valueBoxValue);
+        }
+
+        if (GuiButton(Rectangle{ 160, 60, 125, 30 }, GuiIconText(RICON_CROSS, "Remove")))
+        {
+            // Implement the code to remove the node with value = valueBoxValue from your binary tree here! 
+            //m_binaryTree.Remove(valueBoxValue);
+        }
+
+        // draw the binary tree
+        m_binaryTree.Draw(m_selectedNode);
+
+        EndDrawing();
+        //----------------------------------------------------------------------------------
     }
-}
 
-Node* Find(Node* n, int value)
-{
-    // TODO
-    if (n == nullptr || n->value == value)
-    {
-        return n;
-    }
-
-    if (n->value < value)
-    {
-        return Find(n->right, value);
-    }
-    return Find(n->left, value);
-}
-
-Node* newNode(int data)
-{
-    Node* n = new Node;
-    
-    n->value = data;
-
-    n->left = nullptr;
-    n->right = nullptr;
-
-    return n;
-}
-
-void NodeToInsert(Node*& root, Node* nodeToInsert)
-{
-    // TODO
-
-    if (root == nullptr)
-    {
-        root = nodeToInsert;
-    }
-    if (nodeToInsert->value > root->value)
-    {
-        NodeToInsert(root->right, nodeToInsert);
-    }
-    if (nodeToInsert->value <= root->value)
-    {
-        NodeToInsert(root->left, nodeToInsert);
-    }
-}
-
-void Remove(Node* root, Node* nodeToRemove)
-{
-    // TODO
-    Node* parent = nullptr;
-    
-}
-
-//int Height(Node* n)
-//{
-//    // TODO
-//}
-//
-//int Depth(Node* root, Node* n)
-//{
-//    // TODO
-//}
-//
-void PrintNode(Node* n)
-{
-    std::cout << n->value << ", ";
-}
-
-int main(int argc, char** argv)
-{
-
-    // our tree
-    /***********************
-                    6
-                   / \
-                  /   \
-                 /     \
-                4       8
-               / \     / \
-              2   5   7   9
-    ***********************/
-
-    Node root(6,
-        new Node(4,
-            new Node(2),
-            new Node(5)),
-        new Node(8,
-            new Node(7),
-            new Node(9)));
-
-   // Node* test = NodeToInsert(&root, ;
-    //NodeToInsert(&root,  new Node(10);
-   
-  
-
-
-    // Call our ForEach Method defined above,
-    // Pass it the "PrintNode" method
-    ForEachPreOrder(&root, PrintNode);
-
-    // We can also pass in a lambda function
-    // directly as a parameter
-   /* ForEachDfs(&root, [](Node* n) {
-        std::cout << n->value << ", ";
-        });*/
+    // De-Initialization
+    //--------------------------------------------------------------------------------------   
+    CloseWindow();        // Close window and OpenGL context
+    //--------------------------------------------------------------------------------------
 
     return 0;
-
 }
