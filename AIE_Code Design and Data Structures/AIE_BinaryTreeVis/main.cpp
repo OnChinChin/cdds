@@ -84,14 +84,6 @@ Node* newNode(int data)
 
 void NodeToInsert(Node*& n, Node* nti)
 {
-
-	/*if (n == nullptr)
-		n = nti;
-	else if (nti->value > n->value)
-		NodeToInsert(n->right, nti);
-	else if (nti->value < n->value)
-		NodeToInsert(n->left, nti);*/
-
 	if (n == nullptr)
 	{
 		n = nti;

@@ -10,12 +10,12 @@ public:
 	bool HasRight() { return (m_right != nullptr); }
 
 	int GetData() { return m_value; }
-	TreeNode* GetLeft() { return m_left; }
-	TreeNode* GetRight() { return m_right; }
+	TreeNode*& GetLeft() { return m_left; }
+	TreeNode*& GetRight() { return m_right; }
 
-	void SetData(int value) {  }
-	void SetLeft(TreeNode* node) {  }
-	void SetRight(TreeNode* node) {  }
+	void SetData(int value) { m_value = value; }
+	void SetLeft(TreeNode* node) { m_left = m_left; }
+	void SetRight(TreeNode* node) { m_right = m_right; }
 
 	void Draw(int x, int y, bool selected=false);
 	

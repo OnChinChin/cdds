@@ -30,7 +30,28 @@ bool BinaryTree::IsEmpty() const
 // Smaller elements are placed to the left, larger onces are placed to the right.
 void BinaryTree::Insert(int a_nValue)
 {
-	
+	TreeNode* node = new TreeNode(a_nValue);
+
+	NodeToInsert(m_pRoot, node);
+}
+
+void BinaryTree::NodeToInsert(TreeNode*& n, TreeNode* nti)
+{
+	if (n == nullptr)
+	{
+		n = nti;
+
+	}
+	else if (nti->GetData() < n->GetData())
+	{
+		NodeToInsert(n->GetLeft(), nti);
+
+	}
+	else if (nti->GetData() > n->GetData())
+	{
+		NodeToInsert(n->GetRight(), nti);
+
+	}
 }
 
 TreeNode* BinaryTree::Find(int a_nValue)
@@ -38,19 +59,81 @@ TreeNode* BinaryTree::Find(int a_nValue)
 	TreeNode* pCurrent = nullptr;
 	TreeNode* pParent = nullptr;
 
+	ToFind(m_pRoot, a_nValue);
+
 	return FindNode(a_nValue, pCurrent, pParent) ? pCurrent: nullptr;
 }
 
 bool BinaryTree::FindNode(int a_nSearchValue, TreeNode*& ppOutNode, TreeNode*& ppOutParent)
 {
-
-
 	return false;
 }
+
+TreeNode* BinaryTree::ToFind(TreeNode* n, int value)
+{
+	if (n == nullptr || n->GetData() == value)
+	{
+		return n;
+	}
+
+	if (n->GetData() < value)
+	{
+		return ToFind(n->GetRight(), value);
+	}
+	return ToFind(n->GetLeft(), value);
+}
+
 
 void BinaryTree::Remove(int a_nValue)
 {
 
+	ToRemove(m_pRoot, Find(a_nValue));
+}
+
+TreeNode* BinaryTree::minValueNode(TreeNode* Treenode)
+{
+	TreeNode* currentNode = Treenode;
+	while (currentNode && currentNode->GetLeft() != nullptr)
+	{
+		currentNode = currentNode->GetLeft();
+	}
+	return currentNode;
+}
+
+TreeNode* BinaryTree::ToRemove(TreeNode* root, TreeNode* node)
+{
+	if (node == nullptr)
+	{
+		return nullptr;
+	}
+
+	if (node->GetData() < root->GetData())
+	{
+		root->SetLeft(ToRemove(root->GetLeft(), node));
+	}
+
+	else if (node->GetData() > root->GetData())
+	{
+		root->SetRight(ToRemove(root->GetRight(), node));
+	}
+
+	else
+	{
+		if (root->GetLeft() == nullptr)
+		{
+			TreeNode* temp = root->GetRight();
+			return temp;
+		}
+		else if (root->GetRight() == nullptr)
+		{
+			TreeNode* temp = root->GetLeft();
+			return temp;
+		}
+		TreeNode* temp = minValueNode(root->GetRight());
+		root->SetData(temp->GetData());
+		root->SetRight(ToRemove(root->GetRight(), temp));
+	}
+	return root;
 }
 
 void BinaryTree::PrintOrdered()

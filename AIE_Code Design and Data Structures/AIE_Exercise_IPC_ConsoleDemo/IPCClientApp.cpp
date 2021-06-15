@@ -33,6 +33,8 @@ void IPCClientApp::Run()
         CloseHandle(fileHandle);
     }
 
+    for(int i =0; i <)
+
     // write out what is in the memory block
     std::cout << "MyData = { ";
     std::cout << data->i << ", ";
@@ -41,6 +43,8 @@ void IPCClientApp::Run()
     std::cout << data->b << ", ";
     std::cout << data->d << ", ";
     std::cout << " };" << std::endl;
+
+    
 
     // wait for a keypress to close
     _getch();

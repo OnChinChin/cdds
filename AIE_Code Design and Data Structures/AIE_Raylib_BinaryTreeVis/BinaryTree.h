@@ -16,12 +16,17 @@ public:
 
 	bool IsEmpty() const;
 	void Insert(int a_nValue);
+	
+
 	void Remove(int a_nValue);
+	TreeNode* ToRemove(TreeNode* root, TreeNode* node);
 	TreeNode* Find(int a_nValue);
+	TreeNode* ToFind(TreeNode* n, int value);
+	TreeNode* minValueNode(TreeNode* Treenode);
 
 	void PrintOrdered();
 	void PrintUnordered();
-
+	void NodeToInsert(TreeNode*& n, TreeNode* nti);
 	void Draw(TreeNode* selected = nullptr);
 
 private:
