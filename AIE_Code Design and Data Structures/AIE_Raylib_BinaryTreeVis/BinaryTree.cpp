@@ -40,28 +40,22 @@ void BinaryTree::NodeToInsert(TreeNode*& n, TreeNode* nti)
 	if (n == nullptr)
 	{
 		n = nti;
-
 	}
 	else if (nti->GetData() < n->GetData())
 	{
 		NodeToInsert(n->GetLeft(), nti);
-
 	}
 	else if (nti->GetData() > n->GetData())
 	{
 		NodeToInsert(n->GetRight(), nti);
-
 	}
 }
 
 TreeNode* BinaryTree::Find(int a_nValue)
 {
-	TreeNode* pCurrent = nullptr;
-	TreeNode* pParent = nullptr;
-
 	ToFind(m_pRoot, a_nValue);
 
-	return FindNode(a_nValue, pCurrent, pParent) ? pCurrent: nullptr;
+	return ToFind(m_pRoot, a_nValue);
 }
 
 bool BinaryTree::FindNode(int a_nSearchValue, TreeNode*& ppOutNode, TreeNode*& ppOutParent)
@@ -86,6 +80,15 @@ TreeNode* BinaryTree::ToFind(TreeNode* n, int value)
 
 void BinaryTree::Remove(int a_nValue)
 {
+	if (m_pRoot->GetData() == a_nValue)
+	{
+		if (m_pRoot->GetLeft() == nullptr)
+			m_pRoot = m_pRoot->GetRight();
+		else if (m_pRoot->GetRight() == nullptr)
+			m_pRoot = m_pRoot->GetLeft();
+		else if (m_pRoot->GetLeft() == nullptr && m_pRoot->GetRight() == nullptr)
+			m_pRoot = nullptr;
+	}
 
 	ToRemove(m_pRoot, Find(a_nValue));
 }
@@ -123,6 +126,8 @@ TreeNode* BinaryTree::ToRemove(TreeNode* root, TreeNode* node)
 		{
 			TreeNode* temp = root->GetRight();
 			return temp;
+			//TreeNode* temp = root->GetRight();
+			//return temp;
 		}
 		else if (root->GetRight() == nullptr)
 		{

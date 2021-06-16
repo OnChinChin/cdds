@@ -14,8 +14,8 @@ public:
 	TreeNode*& GetRight() { return m_right; }
 
 	void SetData(int value) { m_value = value; }
-	void SetLeft(TreeNode* node) { m_left = m_left; }
-	void SetRight(TreeNode* node) { m_right = m_right; }
+	void SetLeft(TreeNode* node) { m_left = node; }
+	void SetRight(TreeNode* node) { m_right = node; }
 
 	void Draw(int x, int y, bool selected=false);
 	

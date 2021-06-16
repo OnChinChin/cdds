@@ -19,7 +19,7 @@ public:
 	
 
 	void Remove(int a_nValue);
-	TreeNode* ToRemove(TreeNode* root, TreeNode* node);
+	TreeNode* ToRemove(TreeNode* root, TreeNode*  node);
 	TreeNode* Find(int a_nValue);
 	TreeNode* ToFind(TreeNode* n, int value);
 	TreeNode* minValueNode(TreeNode* Treenode);
