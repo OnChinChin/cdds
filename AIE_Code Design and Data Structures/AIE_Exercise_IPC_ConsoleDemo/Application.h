@@ -14,7 +14,6 @@ public:
 		char c;
 		bool b;
 		double d;
-
 	};
 
     Application();

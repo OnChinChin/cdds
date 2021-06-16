@@ -83,11 +83,18 @@ void BinaryTree::Remove(int a_nValue)
 	if (m_pRoot->GetData() == a_nValue)
 	{
 		if (m_pRoot->GetLeft() == nullptr)
+		{
 			m_pRoot = m_pRoot->GetRight();
+		}	
 		else if (m_pRoot->GetRight() == nullptr)
+		{
 			m_pRoot = m_pRoot->GetLeft();
+		}
 		else if (m_pRoot->GetLeft() == nullptr && m_pRoot->GetRight() == nullptr)
+		{
 			m_pRoot = nullptr;
+		}
+			
 	}
 
 	ToRemove(m_pRoot, Find(a_nValue));
@@ -105,31 +112,29 @@ TreeNode* BinaryTree::minValueNode(TreeNode* Treenode)
 
 TreeNode* BinaryTree::ToRemove(TreeNode* root, TreeNode* node)
 {
-	if (node == nullptr)
+	if (node == nullptr) // search for value in tree
 	{
 		return nullptr;
 	}
 
-	if (node->GetData() < root->GetData())
+	if (node->GetData() < root->GetData()) // left side of tree
 	{
 		root->SetLeft(ToRemove(root->GetLeft(), node));
 	}
 
-	else if (node->GetData() > root->GetData())
+	else if (node->GetData() > root->GetData()) // right side of tree
 	{
 		root->SetRight(ToRemove(root->GetRight(), node));
 	}
 
 	else
-	{
+	{  
 		if (root->GetLeft() == nullptr)
 		{
 			TreeNode* temp = root->GetRight();
 			return temp;
-			//TreeNode* temp = root->GetRight();
-			//return temp;
 		}
-		else if (root->GetRight() == nullptr)
+		else if (root->GetRight() == nullptr) 
 		{
 			TreeNode* temp = root->GetLeft();
 			return temp;

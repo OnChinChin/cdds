@@ -1,4 +1,5 @@
 #include"IPCClientApp.h"
+#include"Application.h"
 
 #include<windows.h>
 #include<iostream>
@@ -33,7 +34,6 @@ void IPCClientApp::Run()
         CloseHandle(fileHandle);
     }
 
-    for(int i =0; i <)
 
     // write out what is in the memory block
     std::cout << "MyData = { ";
