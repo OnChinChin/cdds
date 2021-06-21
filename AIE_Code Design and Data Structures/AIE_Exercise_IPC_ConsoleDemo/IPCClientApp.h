@@ -7,7 +7,7 @@ class  IPCClientApp : public Application
 public:
     IPCClientApp();
     virtual ~IPCClientApp();
-
+    
     virtual void Run();
 
 protected:

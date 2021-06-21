@@ -2,7 +2,7 @@
 // ---------------------------------
 
 #pragma once
-
+#include <windows.h>
 
 class Application
 {
@@ -15,6 +15,10 @@ public:
 		bool b;
 		double d;
 	};
+
+	HANDLE m_fileHandle;
+
+	LPCWSTR m_sharedMem = L"MySharedMemory";
 
     Application();
     virtual ~Application();

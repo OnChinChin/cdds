@@ -18,20 +18,21 @@ IPCClientApp::~IPCClientApp()
 void IPCClientApp::Run()
 {
     // gain access to a named shared memory block that already exists
-    HANDLE fileHandle = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, L"MySharedMemory");
+    m_fileHandle = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, m_sharedMem);
 
-    if (fileHandle == nullptr)
+    if (m_fileHandle == nullptr)
     {
         std::cout << "Could not create file mapping object: " << GetLastError() << std::endl;
     }
 
     // map the memory from the shared block to a pointer we can manipulate
-    MyData* data = (MyData*)MapViewOfFile(fileHandle, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(MyData));
+    MyData* data = (MyData*)MapViewOfFile(m_fileHandle, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(MyData));
 
     if (data == nullptr)
     {
         std::cout << "Could not map view of file: " << GetLastError() << std::endl;
-        CloseHandle(fileHandle);
+        CloseHandle(m_fileHandle);
+        return;
     }
 
 
@@ -53,5 +54,5 @@ void IPCClientApp::Run()
     UnmapViewOfFile(data);
 
     // close the shared file
-    CloseHandle(fileHandle);
+    CloseHandle(m_fileHandle);
 }

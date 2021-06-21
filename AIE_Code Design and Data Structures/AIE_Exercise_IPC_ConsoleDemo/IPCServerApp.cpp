@@ -1,4 +1,5 @@
 #include"IPCServerApp.h"
+#include"Application.h"
 
 #include<windows.h>
 #include<iostream>
@@ -22,21 +23,21 @@ void IPCServerApp::Run()
 
 
         // open a named shared memory block
-        HANDLE fileHandle = CreateFileMapping(
+        m_fileHandle = CreateFileMapping(
             INVALID_HANDLE_VALUE, // a handle to an existing virtual file, or invalid
             nullptr, // optional security attributes
             PAGE_READWRITE, // read/write access control
             0,
             sizeof(MyData), // size of the memory block, 
-            L"MySharedMemory");
+            m_sharedMem);
 
-        if (fileHandle == nullptr)
+        if (m_fileHandle == nullptr)
         {
             std::cout << "Could not create file mapping object: " <<
                 GetLastError() << std::endl;
         }
 
-        MyData* data = (MyData*)MapViewOfFile(fileHandle,
+        MyData* data = (MyData*)MapViewOfFile(m_fileHandle,
             FILE_MAP_ALL_ACCESS,
             0,
             0,
@@ -47,7 +48,7 @@ void IPCServerApp::Run()
             std::cout << "Could not map view of file: " <<
                 GetLastError() << std::endl;
 
-            CloseHandle(fileHandle);
+            CloseHandle(m_fileHandle);
         }
 
         *data = myData;
@@ -64,8 +65,6 @@ void IPCServerApp::Run()
         UnmapViewOfFile(data);
 
 
-        CloseHandle(fileHandle);
+        CloseHandle(m_fileHandle);
     }
-
-    std::cout << "GAY!!!!!" << std::endl;
 }

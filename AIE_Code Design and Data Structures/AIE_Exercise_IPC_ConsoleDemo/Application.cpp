@@ -2,7 +2,7 @@
 
 Application::Application()
 {
-	struct MyData;
+	
 
 }
 
